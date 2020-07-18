@@ -1,4 +1,9 @@
 export const fetcher = async (url) => {
   const r = await fetch(url);
-  return await r.json();
+  if (r.ok) {
+    return await r.json();
+  } else {
+    const error = await r.text();
+    throw error;
+  }
 };

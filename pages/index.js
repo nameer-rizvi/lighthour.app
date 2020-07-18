@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import {
   Error,
@@ -15,10 +16,35 @@ import useSWR from "swr";
 import { fetcher } from "../utilities";
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState("");
-  const { data, error } = useSWR(false && `/api/time?${location}`, fetcher);
-  const loading = false;
-  const sunrise = true;
+  const [getLocation, setGetLocation] = useState(false);
+  const { data, error, ...restSWR } = useSWR(
+    getLocation ? `/api/time?location=${location}` : null,
+    fetcher
+  );
+
+  useEffect(() => {
+    data && !error && setLoading(false);
+  }, [data]);
+
+  useEffect(() => {
+    if (location) {
+      setGetLocation(false);
+      setLoading(false);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (error) {
+      setLoading(false);
+    }
+  }, [error]);
+
+  const findLocation = (e) => {
+    setLoading(true);
+    setGetLocation(true);
+  };
 
   return (
     <div className="container">
@@ -43,33 +69,55 @@ export default function Home() {
           What city are you in?
         </Label>
         <Input
+          type="text"
           id="city"
           mt={3}
           autoComplete="off"
-          onBlur={(e) => setLocation(e.target.value)}
+          onChange={(e) => setLocation(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              findLocation();
+            }
+          }}
+          onBlur={findLocation}
           {...fadeIn}
         />
-        {error && <Error mt={3}>{error}</Error>}
-        <Button mt={3} {...(loading ? { ...colorGradient } : { ...fadeIn })}>
+        {error && (
+          <Error mt={3}>
+            {error.constructor === String ? error : JSON.stringify(error)}
+          </Error>
+        )}
+        <Button
+          type="button"
+          mt={3}
+          {...(loading ? colorGradient : fadeIn)}
+          key={loading}
+          onClick={findLocation}
+        >
           {!loading ? "Search" : "Loading"}
         </Button>
 
-        <Result mt={5} p={5}>
-          <div>
-            <H1 fontSize={5}>
-              The next golden hour starts{" "}
-              {sunrise ? "at sunrise" : "an hour before sunset"}:
-            </H1>
+        {data && !error && (
+          <Result mt={5} p={5}>
+            <div>
+              <H1 fontSize={5}>
+                The next golden hour starts{" "}
+                {data.what === "sunrise"
+                  ? `at sunrise (${data.sunset})`
+                  : `an hour before sunset (${data.sunset})`}
+                :
+              </H1>
 
-            <H2 fontSize={7} mt={2} fontFamily="sans-serif">
-              4:00pm*
-            </H2>
-            <H2 fontSize={4} mt={2} fontFamily="sans-serif">
-              Washington, DC
-            </H2>
-          </div>
-          <p>*weather permitting</p>
-        </Result>
+              <H2 fontSize={7} mt={4} fontFamily="sans-serif">
+                {data.hour}*
+              </H2>
+              <H2 fontSize={4} mt={4} fontFamily="sans-serif">
+                {data.citystate}
+              </H2>
+            </div>
+            <p>*weather permitting</p>
+          </Result>
+        )}
       </Flex>
     </div>
   );
