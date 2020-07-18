@@ -13,38 +13,20 @@ import {
   Result,
 } from "../components";
 import useSWR from "swr";
-import { fetcher } from "../utilities";
+import { fetcher, useDebounce } from "../utilities";
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState("");
-  const [getLocation, setGetLocation] = useState(false);
-  const { data, error, ...restSWR } = useSWR(
-    getLocation ? `/api/time?location=${location}` : null,
-    fetcher
+
+  const debouncedSearch = useDebounce(location, 500);
+
+  const { data, error } = useSWR(
+    `/api/time?location=${debouncedSearch}`,
+    fetcher,
+    { shouldRetryOnError: false }
   );
 
-  useEffect(() => {
-    data && !error && setLoading(false);
-  }, [data]);
-
-  useEffect(() => {
-    if (location) {
-      setGetLocation(false);
-      setLoading(false);
-    }
-  }, [location]);
-
-  useEffect(() => {
-    if (error) {
-      setLoading(false);
-    }
-  }, [error]);
-
-  const findLocation = (e) => {
-    setLoading(true);
-    setGetLocation(true);
-  };
+  const loading = !data && !error;
 
   return (
     <div className="container">
@@ -62,7 +44,7 @@ export default function Home() {
         alignItems="center"
         p={[20, 30]}
       >
-        <H1 fontSize={5} {...fadeIn}>
+        <H1 fontSize={5} textAlign="center" {...fadeIn}>
           When's golden hour?
         </H1>
         <Label htmlFor="city" mt={3} {...fadeIn}>
@@ -71,34 +53,29 @@ export default function Home() {
         <Input
           type="text"
           id="city"
-          mt={3}
+          mt={4}
           autoComplete="off"
           onChange={(e) => setLocation(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              findLocation();
-            }
-          }}
-          onBlur={findLocation}
+          width={["100%", "inherit"]}
           {...fadeIn}
         />
         {error && (
-          <Error mt={3}>
+          <Error mt={4} key={error}>
             {error.constructor === String ? error : JSON.stringify(error)}
           </Error>
         )}
         <Button
           type="button"
-          mt={3}
+          mt={4}
           {...(loading ? colorGradient : fadeIn)}
           key={loading}
-          onClick={findLocation}
+          // onClick={findLocation}
         >
           {!loading ? "Search" : "Loading"}
         </Button>
 
         {data && !error && (
-          <Result mt={5} p={5}>
+          <Result mt={5} p={[4, 5]}>
             <div>
               <H1 fontSize={5}>
                 The next golden hour starts{" "}

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { space } from "styled-system";
 
 export const Label = styled(motion.label)`
-  font-size: 1rem;
+  font-size: 1.35rem;
   font-family: system-ui, sans-serif;
   font-weight: bold;
   letter-spacing: 2px;

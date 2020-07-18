@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { space } from "styled-system";
+import { space, layout } from "styled-system";
 
 export const Input = styled(motion.input)`
   border: 4px solid ${(props) => props.theme.colors.text};
@@ -9,7 +9,9 @@ export const Input = styled(motion.input)`
   font-size: 2rem;
   font-family: system-ui, serif;
   font-weight: bold;
+  box-sizing: border-box;
   ${space}
+  ${layout}
 
   &:focus {
     outline: 4px solid white;
