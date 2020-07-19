@@ -33,5 +33,6 @@ export const Button = styled(motion.button)`
     cursor: not-allowed;
     pointer-events: all !important;
     background-color: #00010185;
+    border: none;
   }
 `;
