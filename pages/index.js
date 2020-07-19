@@ -137,7 +137,9 @@ export default function Home({ query }) {
           fontFamily="display"
           type="button"
           mt={4}
+          width={["100%", "inherit"]}
           disabled={!location}
+          aria-disabled={!location}
           onClick={getGoldenHour}
           {...(loading ? colorGradient : fadeIn)}
         >
@@ -146,27 +148,44 @@ export default function Home({ query }) {
 
         <div id="golden-hour" />
         {!loading && data && !error && location && location.trim() !== "" && (
-          <Result mt={5} p={[4, 5]} id="golden-hour-results">
+          <Result
+            mt={5}
+            p={[4, 5]}
+            width={["100%", "450px"]}
+            id="golden-hour-results"
+          >
             <div>
-              <H1 fontSize={5} lineHeight={1.25} fontFamily="display">
-                The next golden hour starts at
+              <H1 fontSize={[4, 5]} lineHeight={1.25} fontFamily="display">
+                The next golden hour starts
               </H1>
 
-              <H2 fontSize={8} mt={5} fontFamily="sans-serif">
+              <H2
+                fontSize={[6, 7, 8]}
+                lineHeight={1}
+                mt={[4, 5]}
+                mb={[1, 2]}
+                fontFamily="sans-serif"
+              >
                 <time>{data.hour}</time>
               </H2>
-              <H2 fontSize={4} mb={5} fontFamily="sans-serif">
+              <H2 fontSize={4} mb={[4, 5]} fontFamily="sans-serif">
                 {data.citystate}
               </H2>
             </div>
-            <Paragraph fontFamily="display" fontWeight="regular" mt={2}>
-              *weather permitting
+            <Paragraph
+              fontSize={0}
+              fontFamily="display"
+              fontWeight="regular"
+              lineHeight={1.25}
+              mt={2}
+            >
+              *weather and location permitting
             </Paragraph>
           </Result>
         )}
 
         <Footer flexDirection="column" mt={5} width="100%">
-          <Paragraph fontFamily="sans-serif" fontSize="small">
+          <Paragraph fontFamily="sans-serif" fontSize={0} color="textOpaque">
             © {new Date().getFullYear()} lighthour | N &amp; N |{" "}
             <a
               target="__blank"
@@ -175,19 +194,6 @@ export default function Home({ query }) {
               href="mailto:naomigracep@gmail.com, rizvinameer@gmail.com?&subject=Feedback%20for%20lighthour&body=Hello%20NG and Nameer,%0ASome feedback for lighthour..."
             >
               send us feedback
-            </a>
-          </Paragraph>
-          <Paragraph fontFamily="sans-serif" fontSize="small">
-            Golden hour is the period of daytime shortly after sunrise or before
-            sunset, during which daylight is redder and softer than when the Sun
-            is higher in the sky{" "}
-            <a
-              target="__blank"
-              rel="noreferrer"
-              rel="noopener"
-              href="https://en.wikipedia.org/wiki/Golden_hour_(photography)"
-            >
-              [1]
             </a>
           </Paragraph>
         </Footer>

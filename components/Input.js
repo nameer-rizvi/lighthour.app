@@ -11,6 +11,7 @@ export const Input = styled(motion.input)`
   font-family: system-ui, serif;
   font-weight: bold;
   box-sizing: border-box;
+  transition: all 250ms ease-out;
   ${space}
   ${layout}
 

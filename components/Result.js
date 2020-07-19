@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { space } from "styled-system";
+import { space, layout } from "styled-system";
 
 export const Result = styled.section`
   display: flex;
@@ -10,7 +10,8 @@ export const Result = styled.section`
   color: ${(props) => props.theme.colors.background} !important;
   justify-content: space-between;
   min-height: 400px;
-  max-width: 375px;
+  box-sizing: border-box;
+  ${layout}
 
   h1,
   h2 {

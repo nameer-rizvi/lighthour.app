@@ -6,6 +6,7 @@ const theme = {
   colors: {
     background: "#f0bf4a",
     text: "#000101",
+    textOpaque: "#000101c2",
   },
   fonts: {
     display: `'Inknut Antiqua', serif`,

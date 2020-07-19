@@ -7,7 +7,7 @@ export const Paragraph = styled.p`
   ${color}
 
   a {
-    color: ${(props) => props.theme.colors.text};
+    ${color}
   }
 
   a:focus {
