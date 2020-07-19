@@ -16,9 +16,11 @@ import {
 } from "../components";
 import useSWR from "swr";
 import { fetcher } from "../utilities";
+import { useRouter } from "next/router";
 
-export default function Home() {
-  const [location, setLocation] = useState("");
+export default function Home({ query }) {
+  const router = useRouter();
+  const [location, setLocation] = useState(query.location || "");
   const [loading, setLoading] = useState(false);
   const searchKey = `/api/time?location=${location}`;
 
@@ -26,8 +28,10 @@ export default function Home() {
     revalidateOnMount: false,
     revalidateOnFocus: false,
     shouldRetryOnError: false,
-    onSuccess: () => {
+    onSuccess: (data, key, config) => {
+      const location = key.split("?");
       setLoading(false);
+      router.push(`/?${location[1]}`, undefined, { shallow: true });
     },
     onError: () => {
       setLoading(false);
@@ -45,6 +49,13 @@ export default function Home() {
     setLoading(true);
     mutate(searchKey);
   };
+
+  useEffect(() => {
+    // if component mounts with location, fire query
+    if (location) {
+      getGoldenHour();
+    }
+  }, []);
 
   useEffect(() => {
     if (!loading && data && !error) {
@@ -65,6 +76,23 @@ export default function Home() {
           rel="stylesheet"
         />
         <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
       </Head>
       <Flex
         flexDirection="column"
@@ -87,6 +115,7 @@ export default function Home() {
           What city?
         </Label>
         <Input
+          defaultValue={location || undefined}
           type="text"
           id="city"
           mt={[3, 4]}
@@ -120,15 +149,11 @@ export default function Home() {
           <Result mt={5} p={[4, 5]} id="golden-hour-results">
             <div>
               <H1 fontSize={5} lineHeight={1.25} fontFamily="display">
-                The next golden hour starts{" "}
-                {data.what === "sunrise"
-                  ? `at sunrise (${data.sunset})`
-                  : `an hour before sunset (${data.sunset})`}
-                :
+                The next golden hour starts at
               </H1>
 
               <H2 fontSize={8} mt={5} fontFamily="sans-serif">
-                <time>{data.hour}</time>*
+                <time>{data.hour}</time>
               </H2>
               <H2 fontSize={4} mb={5} fontFamily="sans-serif">
                 {data.citystate}
@@ -140,7 +165,7 @@ export default function Home() {
           </Result>
         )}
 
-        <Footer flexDirection="column" mt={5} width={["100%", "375px"]}>
+        <Footer flexDirection="column" mt={5} width="100%">
           <Paragraph fontFamily="sans-serif" fontSize="small">
             © {new Date().getFullYear()} lighthour | N &amp; N |{" "}
             <a
@@ -153,7 +178,7 @@ export default function Home() {
             </a>
           </Paragraph>
           <Paragraph fontFamily="sans-serif" fontSize="small">
-            golden hour is the period of daytime shortly after sunrise or before
+            Golden hour is the period of daytime shortly after sunrise or before
             sunset, during which daylight is redder and softer than when the Sun
             is higher in the sky{" "}
             <a
@@ -169,4 +194,8 @@ export default function Home() {
       </Flex>
     </div>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  return { props: { query } };
 }

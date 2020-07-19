@@ -16,6 +16,8 @@ export const Button = styled(motion.button)`
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 250ms ease-out;
+
   ${space}
   ${typography}
 
@@ -27,5 +29,6 @@ export const Button = styled(motion.button)`
   &:disabled {
     cursor: not-allowed;
     pointer-events: all !important;
+    background-color: #00010185;
   }
 `;
