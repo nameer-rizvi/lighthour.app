@@ -4,6 +4,7 @@ import { space, layout } from "styled-system";
 
 export const Input = styled(motion.input)`
   border: 4px solid ${(props) => props.theme.colors.text};
+  border-radius: 0;
   background: transparent;
   padding: 20px;
   font-size: 2rem;
@@ -16,12 +17,5 @@ export const Input = styled(motion.input)`
   &:focus {
     outline: 4px solid white;
     outline-offset: 2px;
-  }
-
-  ::selection {
-    background: #fff;
-  }
-  ::-moz-selection {
-    background: #fff;
   }
 `;

@@ -7,6 +7,12 @@ const theme = {
     background: "#f0bf4a",
     text: "#000101",
   },
+  fonts: {
+    display: `'Inknut Antiqua', serif`,
+    displayWeight: 800,
+    serif: `serif`,
+    sans: `system-ui, sans`,
+  },
 };
 
 export default class MyApp extends App {

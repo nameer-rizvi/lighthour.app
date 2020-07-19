@@ -9,13 +9,6 @@ export const H1 = styled(motion.h1)`
     ${space}
     ${typography}
     ${layout}
-
-    ::selection {
-    background: #fff; 
-    }
-    ::-moz-selection {
-    background: #fff; 
-    }
 `;
 
 export const H2 = styled(motion.h2)`
@@ -25,11 +18,4 @@ export const H2 = styled(motion.h2)`
     ${space}
     ${typography}
     ${layout}
-
-    ::selection {
-    background: #fff; 
-    }
-    ::-moz-selection {
-    background: #fff; 
-    }
 `;

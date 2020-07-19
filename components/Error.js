@@ -6,18 +6,12 @@ export const Error = styled(motion.div)`
   font-size: 1rem;
   font-family: system-ui, sans-serif;
   font-weight: bold;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   padding: 10px 20px;
   color: ${(props) => props.theme.colors.text};
   background-color: white;
   outline: 2px solid white;
   outline-offset: 2px;
   ${space}
-
-  ::selection {
-    background: ${(props) => props.theme.colors.background};
-  }
-  ::-moz-selection {
-    background: ${(props) => props.theme.colors.background};
-  }
 `;

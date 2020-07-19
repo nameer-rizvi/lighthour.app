@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { space } from "styled-system";
+import { space, typography } from "styled-system";
 
 export const Button = styled(motion.button)`
   font-size: 1rem;
@@ -17,16 +17,15 @@ export const Button = styled(motion.button)`
   align-items: center;
   justify-content: center;
   ${space}
+  ${typography}
 
   &:focus {
     outline: 4px solid white;
     outline-offset: 2px;
   }
 
-  ::selection {
-    background: ${(props) => props.theme.colors.background};
-  }
-  ::-moz-selection {
-    background: ${(props) => props.theme.colors.background};
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
   }
 `;
