@@ -1,9 +1,11 @@
+const sanitized = require("sanitized");
+
 const app_id = process.env.APP_ID;
 const app_code = process.env.APP_CODE;
 
 export default async (req, res) => {
-  var { location: name } = req.query;
-  name = name && name.trim();
+  const { location } = req.query;
+  const name = location && sanitized(location.trim());
   const maxLength = 500;
   const url = "https://weather.cit.api.here.com/weather/1.0/report.json";
   const product = "forecast_astronomy";
@@ -57,17 +59,16 @@ export default async (req, res) => {
     const { sunrise, sunset } = astronomy[0];
     const sun = whichSun(sunrise, sunset, timezone);
     const { hour: _hour, minute, render, diff } = sun;
-    const padded_minute = minute.toString().padEnd(2, "0");
+    const _minute = minute < 10 ? `0${minute}` : minute;
     const hour = _hour % 12;
     minute > 30 && hour === hour + 1;
     const meridiem = _hour > 12 ? "PM" : "AM";
     res.json({
-      citystate: city + ", " + state,
-      sunset: `${hour}:${padded_minute} ${meridiem}` || "12 AM",
+      citystate: city + (state && state !== city ? ", " + state : ""),
+      sunset: `${hour}:${_minute} ${meridiem}` || "12 AM",
       hour:
-        `${
-          render == "sunset" ? hour - 1 : hour
-        }:${padded_minute} ${meridiem}` || "12 AM",
+        `${render == "sunset" ? hour - 1 : hour}:${_minute} ${meridiem}` ||
+        "12 AM",
       what: render,
       diff: diff || 0,
     });

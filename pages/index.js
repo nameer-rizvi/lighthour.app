@@ -156,7 +156,7 @@ export default function Home({ query }) {
           >
             <div>
               <H1 fontSize={[4, 5]} lineHeight={1.25} fontFamily="display">
-                The next golden hour starts
+                The next golden hour starts at
               </H1>
 
               <H2
