@@ -169,7 +169,7 @@ export default function Home({ query }) {
               target="__blank"
               rel="noreferrer"
               rel="noopener"
-              href="mailto:naomigracep@gmail.com, rizvinameer@gmail.com?&subject=Feedback%20for%20lighthour&body=Hello%20NG and Nameer,%0ASome feedback for lighthour..."
+              href="mailto:naomigracep@gmail.com, rizvinameer@gmail.com?&subject=Feedback%20for%20lighthour&body=Hello%20NG and Nameer,%0ASome feedback for lighthour... "
             >
               send us feedback
             </a>
