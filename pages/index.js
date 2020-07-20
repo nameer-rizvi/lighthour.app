@@ -179,13 +179,13 @@ export default function Home({ query }) {
               lineHeight={1.25}
               mt={2}
             >
-              *weather and location permitting
+              * Weather &amp; location permitting.
             </Paragraph>
           </Result>
         )}
 
         <Footer flexDirection="column" mt={5} width="100%">
-          <Paragraph fontFamily="sans-serif" fontSize={0} color="textOpaque">
+          <Paragraph fontFamily="display" fontSize={0} color="textOpaque">
             © {new Date().getFullYear()} lighthour | N &amp; N |{" "}
             <a
               target="__blank"
