@@ -10,8 +10,7 @@ const createSitemap = () => {
       <changefreq>monthly</changefreq>
       <priority>1.00</priority>
     </url>
-    <url>
-  </url>
+
   `;
 
   return `<?xml version="1.0" encoding="UTF-8"?>
