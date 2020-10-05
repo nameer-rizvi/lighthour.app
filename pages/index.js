@@ -67,10 +67,30 @@ export default function Home({ query }) {
     <div className="container">
       <Head>
         <title>When's Golden Hour? | Light Hour</title>
+        <title>Light Hour</title>
+        <meta name="title" content="Light Hour" />
         <meta
           name="description"
-          content="What time is golden hour? Get the closest golden hour time in your city."
+          content="What time is golden hour? Get the closest golden hour time in your city"
         />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://lighthour.app/" />
+        <meta property="og:title" content="Light Hour" />
+        <meta
+          property="og:description"
+          content="What time is golden hour? Get the closest golden hour time in your city"
+        />
+        <meta property="og:image" content="/promo.png" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://lighthour.app/" />
+        <meta property="twitter:title" content="Light Hour" />
+        <meta
+          property="twitter:description"
+          content="What time is golden hour? Get the closest golden hour time in your city"
+        />
+        <meta property="twitter:image" content="/promo.png" />
       </Head>
       <Flex
         flexDirection="column"

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { flexbox, space, border, color } from "styled-system";
+import { flexbox, space, border, color, background } from "styled-system";
 
 export const Flex = styled.div`
   display: flex;
@@ -7,4 +7,5 @@ export const Flex = styled.div`
   ${space}
   ${border}
   ${color}
+  ${background}
 `;
